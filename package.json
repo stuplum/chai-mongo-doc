@@ -1,0 +1,35 @@
+{
+  "name": "chai-mongo-doc",
+  "version": "0.1.0",
+  "description": "Mongo document equality assertions for chai",
+  "main": "index.js",
+  "scripts": {
+    "test": "mocha"
+  },
+  "author": "stuplum <stuplum@inkfish.co>",
+  "repository": {
+    "type": "git",
+    "url": "git://github.com/stuplum/chai-mongo-doc.git"
+  },
+  "homepage": "https://github.com/stuplum/chai-mongo-doc",
+  "bugs": "https://github.com/stuplum/chai-mongo-doc/issues",
+  "keywords": [
+    "chai",
+    "chai-plugin",
+    "browser",
+    "plugin",
+    "id",
+    "equality",
+    "assertion",
+    "mongo",
+    "mongodb",
+    "objectid"
+  ],
+  "license": "MIT",
+  "devDependencies": {
+    "bson": "^4.0.1",
+    "bson-objectid": "^1.2.4",
+    "chai": "^4.2.0",
+    "mocha": "^5.2.0"
+  }
+}
