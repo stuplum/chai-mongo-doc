@@ -23,7 +23,7 @@ const KEY_MAPPINGS = {
 }
 
 function getActual (key, actual) {
-  if (actual[key]) {
+  if (actual[key] !== undefined) {
     return actual[key]
   }
 

@@ -8,40 +8,88 @@ chai.use(chaiMongoDoc)
 
 describe('chaiMongoDoc', () => {
   describe('.mongoDoc', () => {
-    it('compares string representations of ids', () => {
-      ({ id: 'foo' }).should.be.mongoDoc({ id: 'foo' })
-    })
-    it('compares not string representations of ids', () => {
-      ({ id: 'foo' }).should.not.be.mongoDoc({ id: 'bar' })
+    describe('other types', () => {
+      it('accepts booleans', () => {
+        const actual = { a: true, b: false }
+        const expected = { a: true, b: false }
+
+        actual.should.be.mongoDoc(expected)
+      })
     })
 
-    it('discovers ids at _id', () => {
-      ({ _id: 'foo' }).should.be.mongoDoc({ _id: 'foo' })
+    describe('handles _id', () => {
+      it('should be true if actual key is _id', () => {
+        const id = 'abc123'
+        const actual = { _id: id }
+        const expected = { id }
+
+        actual.should.be.mongoDoc(expected)
+      })
+
+      it('should be true if expected key is _id', () => {
+        const id = 'abc123'
+        const actual = { id }
+        const expected = { _id: id }
+
+        actual.should.be.mongoDoc(expected)
+      })
+
+      it('should be true if both keys are _id', () => {
+        const id = 'abc123'
+        const actual = { _id: id }
+        const expected = { _id: id }
+
+        actual.should.be.mongoDoc(expected)
+      })
+
+      it('should be true if both keys are id', () => {
+        const id = 'abc123'
+        const actual = { id }
+        const expected = { id }
+
+        actual.should.be.mongoDoc(expected)
+      })
     })
 
-    it('accepts ObjectIds passed in directly', () => {
-      ({ id: 'abc123abc123abc123abc123' }).should.be.mongoDoc({ _id: new ObjectId('abc123abc123abc123abc123') })
+    describe('comparing ObjectIds', () => {
+      it('should be true when actual is an ObjectId', () => {
+        const id = 'abc123abc123abc123abc123'
+        const actual = { someId: new ObjectId(id) }
+        const expected = { someId: id }
+
+        actual.should.be.mongoDoc(expected)
+      })
+
+      it('should be true when expected is an ObjectId', () => {
+        const id = 'abc123abc123abc123abc123'
+        const actual = { someId: id }
+        const expected = { someId: new ObjectId(id) }
+
+        actual.should.be.mongoDoc(expected)
+      })
+
+      it('should be true when both are ObjectIds', () => {
+        const id = 'abc123abc123abc123abc123'
+        const actual = { someId: new ObjectId(id) }
+        const expected = { someId: new ObjectId(id) }
+
+        actual.should.be.mongoDoc(expected)
+      })
     })
 
-    it('accepts ObjectIds passed in directlyz', () => {
-      ({ _id: new ObjectId('abc123abc123abc123abc123') }).should.be.mongoDoc({ id: 'abc123abc123abc123abc123' })
-    })
-
-    it('accepts ObjectIds passed in directlyzz', () => {
-      ({ _id: new ObjectId('abc123abc123abc123abc123') }).should.be.mongoDoc({ _id: new ObjectId('abc123abc123abc123abc123') })
-    })
-
-    it('accepts nested ObjectIds passed in directly', () => {
-      ({
-        id: 'abc123abc123abc123abc123',
-        subDoc: {
-          id: '123abc123abc123abc123abc'
-        }
-      }).should.be.mongoDoc({
-        _id: new ObjectId('abc123abc123abc123abc123'),
-        subDoc: {
-          _id: new ObjectId('123abc123abc123abc123abc')
-        }
+    describe('nested documents', () => {
+      it('accepts nested documents', () => {
+        ({
+          id: 'abc123abc123abc123abc123',
+          subDoc: {
+            id: '123abc123abc123abc123abc'
+          }
+        }).should.be.mongoDoc({
+          _id: new ObjectId('abc123abc123abc123abc123'),
+          subDoc: {
+            _id: new ObjectId('123abc123abc123abc123abc')
+          }
+        })
       })
     })
   })
