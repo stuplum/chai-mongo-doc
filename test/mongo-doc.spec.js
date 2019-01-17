@@ -93,4 +93,16 @@ describe('chaiMongoDoc', () => {
       })
     })
   })
+
+  describe('.objectId', () => {
+    it('should be true when actual is an ObjectId', () => {
+      const actual = new ObjectId('abc123abc123abc123abc123')
+      actual.should.be.objectId
+    })
+
+    it('should be false when actual is not an ObjectId', () => {
+      const actual = 'abc123abc123abc123abc123'
+      actual.should.not.be.objectId
+    })
+  })
 })

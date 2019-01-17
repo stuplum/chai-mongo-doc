@@ -1,7 +1,16 @@
 const compare = require('./compare')
 const normalise = require('./normalise')
+const isObjectId = require('./is-object-id')
 
 module.exports = function (chai) {
+  chai.Assertion.addProperty('objectId', function () {
+    this.assert(
+      isObjectId(this._obj),
+      'expected #{this} to be an ObjectId',
+      'expected ObjectId(#{this}) to not be an ObjectId'
+    )
+  })
+
   chai.Assertion.addMethod('mongoDoc', function (expected) {
     const actual = this._obj
 

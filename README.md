@@ -14,3 +14,10 @@ Mongo Document equality assertions for chai.
 ```javascript
   expect(someDoc).to.be.mongoDoc(actualDoc)
 ```
+
+#objectId
+-------------------
+
+```javascript
+  expect(someObjectId).to.be.objectId
+```
